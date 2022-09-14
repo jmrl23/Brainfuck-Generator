@@ -1,3 +1,1 @@
-const { run } = require('./dist')
-
-module.exports = run
+module.export = require('./dist')

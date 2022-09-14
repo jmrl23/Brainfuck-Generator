@@ -1,7 +1,7 @@
 {
   "name": "brainfuck-generator",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/jmrl23/Brainfuck-Generator.git",
   "author": "Jomariel Gaitera <jojogaitera@gmail.com>",
   "license": "MIT",

@@ -1,3 +1,3 @@
-const brainFuckGenerator = require('../index.js')
+const { run } = require('..')
 
-console.log(brainFuckGenerator('Hello, World!'))
+console.log(run('Hello, World!'))
