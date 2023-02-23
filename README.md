@@ -16,7 +16,7 @@ interface Payload {
 ### Sample request
 
 ```rest
-curl -X POST {{URL}}/ --header "Content-Type: application/json" --data "{ \"input\": \"Hello, World!\" }"
+curl -X POST https://uptight-seal-gown.cyclic.app --header "Content-Type: application/json" --data "{ \"input\": \"Hello, World!\" }"
 ```
 
 ### Outputs
