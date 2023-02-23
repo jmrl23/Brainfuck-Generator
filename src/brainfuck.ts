@@ -1,4 +1,3 @@
-
 /**
  * Set initial pointer
  *
@@ -10,7 +9,8 @@ function generateInitial(divident: number, divisor: number): string {
   const characters = ['+', '-']
   const quotient = divident / divisor
   const excess = quotient % 10
-  if (quotient !== Math.floor(divident / divisor)) throw new Error(`${divident} is not divisible by ${divisor}`)
+  if (quotient !== Math.floor(divident / divisor))
+    throw new Error(`${divident} is not divisible by ${divisor}`)
   if (quotient < 10) throw new Error('Quotient must be greater than 10')
   const removedExcess = quotient - excess
   let balanced = removedExcess - 1
@@ -23,7 +23,9 @@ function generateInitial(divident: number, divisor: number): string {
   }
   let output = ''
   output += outputBreaker(characters[0].repeat(removedExcess / balanced))
-  output += `\n[\n  > ${outputBreaker(characters[0].repeat(balanced))}\n  < -\n]\n> ${outputBreaker(characters[0].repeat(excess))}\n`
+  output += `\n[\n  > ${outputBreaker(
+    characters[0].repeat(balanced)
+  )}\n  < -\n]\n> ${outputBreaker(characters[0].repeat(excess))}\n`
   return output
 }
 
@@ -66,7 +68,7 @@ function convertToAscii(input: string): number[] {
  * @returns {Array<number>}
  */
 function getDifference(base: number, collection: number[]): number[] {
-  return collection.map(value => base - value)
+  return collection.map((value) => base - value)
 }
 
 /**
@@ -76,8 +78,13 @@ function getDifference(base: number, collection: number[]): number[] {
  * @returns {string}
  */
 function outputBreaker(input: string): string {
-  return input.match(/.{1,5}/g)?.join(' ')
-              .match(/.{1,60}/g)?.join('\n ') || ''
+  return (
+    input
+      .match(/.{1,5}/g)
+      ?.join(' ')
+      .match(/.{1,60}/g)
+      ?.join('\n ') || ''
+  )
 }
 
 /**
@@ -93,6 +100,14 @@ function generateOutput(num: number): string {
   return outputBreaker(characters[isNegative ? 0 : 1].repeat(num))
 }
 
+/* A type definition for the function run. */
+interface Payload {
+  input: string
+  minified?: boolean
+  divident?: number
+  divisor?: number
+}
+
 /**
  * Run brainfuck generator
  *
@@ -103,12 +118,20 @@ function generateOutput(num: number): string {
  * @param {number} [divisor=2]
  * @returns {string}
  */
-export function run(input: string, minified: boolean = false, divident: number = 92, divisor: number = 2): string {
+export function run(payload: Payload): string {
+  let { input, minified, divident, divisor } = payload
+  divident = parseInt(divident?.toString() || '92', 10)
+  divisor = parseInt(divisor?.toString() || '2', 10)
   const initial = generateInitial(divident, divisor)
   const sets = generateSets(divisor, input)
   const ascii = convertToAscii(input)
   const difference = getDifference(divident, ascii)
-  const result = difference.map(generateOutput).map(item => `> ${item} .`).join('\n')
-  const output = minified ? (initial + sets + result).replace(/\s+/g, '') : initial + sets + result
+  const result = difference
+    .map(generateOutput)
+    .map((item) => `> ${item} .`)
+    .join('\n')
+  const output = minified
+    ? (initial + sets + result).replace(/\s+/g, '')
+    : initial + sets + result
   return output
 }
