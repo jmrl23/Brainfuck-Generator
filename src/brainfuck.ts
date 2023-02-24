@@ -101,7 +101,7 @@ function generateOutput(num: number): string {
 }
 
 /* A type definition for the function run. */
-interface Payload {
+export interface Payload {
   input: string
   minified?: boolean
   divident?: number
